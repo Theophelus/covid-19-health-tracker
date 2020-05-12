@@ -2,8 +2,11 @@ package com.philus.covid19healthtracker.cotrollers;
 
 
 import com.philus.covid19healthtracker.model.CountryStats;
+import com.philus.covid19healthtracker.model.Global;
 import com.philus.covid19healthtracker.service.CovidDataService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +25,10 @@ public class DataController {
     }
 
     @RequestMapping(value = "/data", produces = "application/json", method = RequestMethod.GET)
-    public List<CountryStats> getData(){
+    public ResponseEntity<List<Global>> getData(){
 
-        return covidDataService.getSaStats();
+        final List<Global> saStats = covidDataService.getSaStats();
+        return new ResponseEntity<>(saStats, HttpStatus.OK);
 
     }
 

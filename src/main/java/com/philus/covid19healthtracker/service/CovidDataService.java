@@ -1,6 +1,8 @@
 package com.philus.covid19healthtracker.service;
-
+import com.google.gson.Gson;
 import com.philus.covid19healthtracker.model.CountryStats;
+import com.philus.covid19healthtracker.model.Global;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 //import org.json.JsonObject;
@@ -12,28 +14,24 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import static java.lang.String.valueOf;
 
 @Service
 public class CovidDataService {
-
-
-
     //Define a list to store AS stats
-   static List<CountryStats> saStats = new ArrayList<>();
+    static List<Global> saStats = new ArrayList<>();
 
-    private final String COVID_19_URL = "https://corona.lmao.ninja/v2/countries/South%20Africa";
+    private final String COVID_19_URL = "https://api.covid19api.com/summary";
+
     // Define HttpClient
     private static HttpClient client;
 
     @PostConstruct
     @Scheduled(cron ="* * * 1 * *")
     public List<CountryStats> getCovidData(){
-
         //Create new Client
         client = HttpClient.newHttpClient();
         //Build client and request data from the api
@@ -55,28 +53,42 @@ public class CovidDataService {
 
 
     private static String apply(String res) {
-         List<CountryStats> stats = new ArrayList<>();
+
+         List<Global> stats = new ArrayList<>();
+         List<CountryStats> countryStats = new ArrayList<>();
+
+        CountryStats s_a = new CountryStats();
+        Global global = new Global();
+
         try {
             JSONObject jsonObject = new JSONObject(res.trim());
 
-            Iterator<?> iterator = jsonObject.keys();
+            //Get Global Object
+            JSONObject object = jsonObject.getJSONObject("Global");
+            //set values in the list
+            global.setNewRecovered(object.getInt("NewRecovered"));
+            global.setNewDeaths(object.getInt("NewDeaths"));
+            global.setTotalRecovered(object.getInt("TotalRecovered"));
+            global.setTotalConfirmed(object.getInt("NewConfirmed"));
+            global.setTotalDeaths(object.getInt("TotalDeaths"));
+            global.setCountryStatsList(countryStats);
 
-            while (iterator.hasNext()) {
-                CountryStats   countryStat = new CountryStats();
+            final JSONArray countries = (JSONArray) jsonObject.get("Countries");
 
-                countryStat.setCountry(jsonObject.getString("country"));
-                countryStat.setCases(jsonObject.getInt("cases"));
-                countryStat.setTodayCases(jsonObject.getInt("todayCases"));
-                countryStat.setDeaths(jsonObject.getInt("deaths"));
-                countryStat.setTodayDeaths(jsonObject.getInt("todayDeaths"));
-                countryStat.setRecovered(jsonObject.getInt("recovered"));
-                countryStat.setActive(jsonObject.getInt("active"));
-                countryStat.setCritical(jsonObject.getInt("critical"));
-                countryStat.setTests(jsonObject.getInt("tests"));
+            for (int i = 0; i < countries.length(); i++) {
 
-                stats.add(countryStat);
-                break;
+                JSONObject country = (JSONObject) countries.get(i);
+                final String countryCode = country.getString("CountryCode");
+
+                if (Objects.equals(countryCode, "ZA")) {
+                    //call getData method
+                    getData(s_a, country);
+
+                }
             }
+            countryStats.add(s_a);
+
+            stats.add(global);
 
             System.out.println(stats);
             saStats = stats;
@@ -86,8 +98,19 @@ public class CovidDataService {
         return res;
     }
 
-    public List<CountryStats> getSaStats() {
-        return saStats;
+    private static void getData(CountryStats s_a, JSONObject country) throws JSONException {
+
+        s_a.setCountry(country.getString("Country"));
+        s_a.setNewConfirmed(country.getInt("NewConfirmed"));
+        s_a.setTotalConfirmed(country.getInt("TotalConfirmed"));
+        s_a.setNewDeaths(country.getInt("NewDeaths"));
+        s_a.setTotalDeaths(country.getInt("TotalDeaths"));
+        s_a.setNewRecovered(country.getInt("NewRecovered"));
+        s_a.setTotalRecovered(country.getInt("TotalRecovered"));
+        s_a.setDate( new Date());
     }
 
+    public List<Global> getSaStats() {
+        return saStats;
+    }
 }

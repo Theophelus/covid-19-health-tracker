@@ -1,120 +1,95 @@
 package com.philus.covid19healthtracker.model;
 
+import com.philus.covid19healthtracker.cotrollers.DataController;
+
+import java.util.Date;
+
 public class CountryStats {
 
-
-    private  String country;
-    private int cases;
-    private int todayCases;
-    private int deaths;
-    private int todayDeaths;
-    private int recovered;
-    private int active;
-    private int critical;
-    private int tests;
-
-
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setCases(int cases) {
-        this.cases = cases;
-    }
-
-    public void setTodayCases(int todayCases) {
-        this.todayCases = todayCases;
-    }
-
-    public void setDeaths(int deaths) {
-        this.deaths = deaths;
-    }
-
-    public void setTodayDeaths(int todayDeaths) {
-        this.todayDeaths = todayDeaths;
-    }
-
-    public void setRecovered(int recovered) {
-        this.recovered = recovered;
-    }
-
-    public void setActive(int active) {
-        this.active = active;
-    }
-
-    public void setCritical(int critical) {
-        this.critical = critical;
-    }
-
-    public void setTests(int tests) {
-        this.tests = tests;
-    }
-
-
-//    public CountryStats(String country, int cases, int todayCases, int deaths, int todayDeaths, int recovered, int active, int critical, int tests) {
-//        this.country = country;
-//        this.cases = cases;
-//        this.todayCases = todayCases;
-//        this.deaths = deaths;
-//        this.todayDeaths = todayDeaths;
-//        this.recovered = recovered;
-//        this.active = active;
-//        this.critical = critical;
-//        this.tests = tests;
-//    }
+    private String Country;
+    private int NewConfirmed;
+    private int TotalConfirmed;
+    private int NewDeaths;
+    private int TotalDeaths;
+    private int NewRecovered;
+    private int TotalRecovered;
+    private Date Date;
 
     public String getCountry() {
-        return country;
+        return Country;
     }
 
-    public int getCases() {
-        return cases;
+    public void setCountry(String country) {
+        Country = country;
     }
 
-    public int getTodayCases() {
-        return todayCases;
+    public int getNewConfirmed() {
+        return NewConfirmed;
     }
 
-    public int getDeaths() {
-        return deaths;
+    public void setNewConfirmed(int newConfirmed) {
+        NewConfirmed = newConfirmed;
     }
 
-    public int getTodayDeaths() {
-        return todayDeaths;
+    public int getTotalConfirmed() {
+        return TotalConfirmed;
     }
 
-    public int getRecovered() {
-        return recovered;
+    public void setTotalConfirmed(int totalConfirmed) {
+        TotalConfirmed = totalConfirmed;
     }
 
-    public int getActive() {
-        return active;
+    public int getNewDeaths() {
+        return NewDeaths;
     }
 
-    public int getCritical() {
-        return critical;
+    public void setNewDeaths(int newDeaths) {
+        NewDeaths = newDeaths;
     }
 
-    public int getTests() {
-        return tests;
+    public int getTotalDeaths() {
+        return TotalDeaths;
     }
 
+    public void setTotalDeaths(int totalDeaths) {
+        TotalDeaths = totalDeaths;
+    }
+
+    public int getNewRecovered() {
+        return NewRecovered;
+    }
+
+    public void setNewRecovered(int newRecovered) {
+        NewRecovered = newRecovered;
+    }
+
+    public int getTotalRecovered() {
+        return TotalRecovered;
+    }
+
+    public void setTotalRecovered(int totalRecovered) {
+        TotalRecovered = totalRecovered;
+    }
+
+    public Date getDate() {
+        return Date;
+    }
+
+    public void setDate(Date date) {
+        this.Date = date;
+    }
 
     @Override
     public String toString() {
         return "CountryStats{" +
-                "country='" + country + '\'' +
-                ", cases=" + cases +
-                ", todayCases=" + todayCases +
-                ", deaths=" + deaths +
-                ", todayDeaths=" + todayDeaths +
-                ", recovered=" + recovered +
-                ", active=" + active +
-                ", critical=" + critical +
-                ", tests=" + tests +
+                "Country='" + Country + '\'' +
+                ", NewConfirmed=" + NewConfirmed +
+                ", TotalConfirmed=" + TotalConfirmed +
+                ", NewDeaths=" + NewDeaths +
+                ", TotalDeaths=" + TotalDeaths +
+                ", NewRecovered=" + NewRecovered +
+                ", TotalRecovered=" + TotalRecovered +
+                ", Date=" + Date +
                 '}';
     }
-
-
 }
