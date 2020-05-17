@@ -1,7 +1,6 @@
 package com.philus.covid19healthtracker.service;
-import com.google.gson.Gson;
-import com.philus.covid19healthtracker.model.CountryStats;
-import com.philus.covid19healthtracker.model.Global;
+import com.philus.covid19healthtracker.models.CountryStats;
+import com.philus.covid19healthtracker.models.Global;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +13,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDate;
 import java.util.*;
 
 import static java.lang.String.valueOf;
@@ -36,7 +34,7 @@ public class CovidDataService {
         client = HttpClient.newHttpClient();
         //Build client and request data from the api
         HttpRequest request = HttpRequest.newBuilder(URI.create(COVID_19_URL))
-                .header("accep", "application/json")
+                .header("accept", "application/json")
                 .GET()
                 .build();
 

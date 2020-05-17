@@ -1,4 +1,4 @@
-package com.philus.covid19healthtracker.model;
+package com.philus.covid19healthtracker.models;
 
 import java.util.List;
 

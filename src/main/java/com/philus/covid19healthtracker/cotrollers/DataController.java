@@ -1,8 +1,7 @@
 package com.philus.covid19healthtracker.cotrollers;
 
 
-import com.philus.covid19healthtracker.model.CountryStats;
-import com.philus.covid19healthtracker.model.Global;
+import com.philus.covid19healthtracker.models.Global;
 import com.philus.covid19healthtracker.service.CovidDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

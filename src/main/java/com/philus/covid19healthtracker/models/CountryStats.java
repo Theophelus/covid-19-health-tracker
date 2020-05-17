@@ -1,6 +1,4 @@
-package com.philus.covid19healthtracker.model;
-
-import com.philus.covid19healthtracker.cotrollers.DataController;
+package com.philus.covid19healthtracker.models;
 
 import java.util.Date;
 
